@@ -59,10 +59,23 @@ function copyGrid(grid){
   return extra;
 }
 
+function flipGrid(grid){
+  for (let i = 0; i < 4; i++){
+    grid[i].reverse();
+  }
+}
+
 
 //one move
 function keyPressed(){
-  if (key == ' '){
+  console.log(keyCode)
+  let flipped = false
+  if (key === DOWN_ARROw){
+  }else if (keyCode === UP_ARROW){
+    grid = flip(grid)
+    flipped=true
+
+
 
     let past = copyGrid(grid)
     for (let i = 0; i<4; i++){
