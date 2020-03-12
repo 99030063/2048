@@ -65,6 +65,7 @@ function flipGrid(grid){
   for (let i = 0; i < 4; i++){
     grid[i].reverse();
   }
+  return grid
 }
 
 
@@ -80,35 +81,46 @@ function rotateGrid(grid){
 //one move
 function keyPressed(){
   console.log(keyCode)
-  let flipped = false
-  let rotated = false
-  if (key === DOWN_ARROW){
+  let flipped = false;
+  let rotated = false;
+  let played = true;
+  if (keyCode === DOWN_ARROW){
     //DO NOTHING
   }else if (keyCode === UP_ARROW){
-    flipGrid(grid)
-    flipped=true
+    grid = flipGrid(grid)
+    flipped=true;
   }else if(keyCode === RIGHT_ARROW){
     grid = rotateGrid(grid);
-    rotated = true
-  }
-
-  let past = copyGrid(grid)
-  for (let i = 0; i<4; i++){
-    grid[i] = operate(grid[i])
-  }
-  let changed = compare(past, grid);
-  
-  if (flipped){
-    flipGrid(grid);
-  }
-  if (rotated){
+    rotated = true;
+  }else if (keyCode === LEFT_ARROW){
     grid = rotateGrid(grid);
+    grid = flipGrid(grid);
+    rotated = true;
+    flipped = true;
+  } else {
+    played = false;
   }
 
-  if (changed){
-    addNumber();
+  if (played){
+    let past = copyGrid(grid)
+    for (let i = 0; i<4; i++){
+      grid[i] = operate(grid[i])
+    }
+    let changed = compare(past, grid);
+    
+    if (flipped){
+      flipGrid(grid);
+    }
+    if (rotated){
+      grid = rotateGrid(grid);
+    }
+
+    if (changed){
+      addNumber();
+    }
   }
 }
+
 function operate(row){
   row = slide(row)
   row = combine(row)
